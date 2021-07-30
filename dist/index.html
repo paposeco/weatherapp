@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <title>Weather App</title>
-    <link rel="stylesheet" href="src/style.css" />
   </head>
   <body>
     <h1>Weather</h1>
@@ -21,6 +20,21 @@
         </label>
         <input type="submit" id="submitsearch" value="Search" />
       </form>
+
+      <div id="info">
+        <div id="locationheader"></div>
+        <div id="currenttemp"></div>
+        <div id="extratempinfo">
+          <div id="feelslike"><h4 class="hideshowtitle">Feels like</h4></div>
+          <div id="mintemp"><h4 class="hideshowtitle">Low</h4></div>
+          <div id="maxtemp"><h4 class="hideshowtitle">High</h4></div>
+          <div id="humidity"><h4 class="hideshowtitle">Humidity</h4></div>
+        </div>
+        <div id="sun">
+          <div id="sunrise"><h4 class="hideshowtitle">Sunrise</h4></div>
+          <div id="sunset"><h4 class="hideshowtitle">Sunset</h4></div>
+        </div>
+      </div>
     </div>
     <script src="main.js"></script>
   </body>

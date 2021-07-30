@@ -1,9 +1,9 @@
 import { format, fromUnixTime } from "date-fns";
 
 const converttemperature = function (temperature) {
-  const temperatureInC = Math.floor((Number(temperature) - 273.15) * 100) / 100;
+  const temperatureInC = Math.floor((Number(temperature) - 273.15) * 10) / 10;
   const temperatureInF =
-    Math.floor(((Number(temperature) - 273.15) * (9 / 5) + 32) * 100) / 100;
+    Math.floor(((Number(temperature) - 273.15) * (9 / 5) + 32) * 10) / 10;
   return [temperatureInC, temperatureInF];
 };
 
@@ -12,7 +12,7 @@ export default class weatherStats {
     weatherdescription,
     temperature,
     feelslike,
-    minimumtemp,
+    mintemp,
     maxtemp,
     humidity,
     sunrise,
@@ -23,7 +23,7 @@ export default class weatherStats {
     this.weatherdescription = weatherdescription;
     this.temperature = converttemperature(temperature);
     this.feelslike = converttemperature(feelslike);
-    this.minimumtemp = converttemperature(minimumtemp);
+    this.mintemp = converttemperature(mintemp);
     this.maxtemp = converttemperature(maxtemp);
     this.humidity = humidity;
     this.sunrise = format(fromUnixTime(sunrise), "HH:mm");
