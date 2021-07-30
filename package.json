@@ -1,0 +1,21 @@
+{
+  "name": "weatherapp",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.47.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "date-fns": "^2.23.0"
+  }
+}
