@@ -4,16 +4,6 @@ import "./style.css";
 const locationsearch = document.getElementById("locationinput");
 const submitsearch = document.getElementById("submitsearch");
 const form = document.querySelector("form");
-const checkbox = document.querySelector("input[type='checkbox']");
-checkbox.addEventListener("click", function (e) {
-  if (checkbox.checked) {
-    console.log("fahr");
-  } else {
-    console.log("cel");
-  }
-});
-
-//tenho de pensar onde é que vou meter isto para ter acesso ao objecto com a informaçao
 
 submitsearch.addEventListener("click", function (e) {
   e.preventDefault();
@@ -47,6 +37,17 @@ async function checkweather(city) {
       fetcheddata.name
     );
     updateDom(weathertoday);
+    const checkbox = document.querySelector("input[type='checkbox']");
+    checkbox.addEventListener("click", function (e) {
+      const currenttemp = document.getElementById("currenttemp");
+      if (currenttemp.innerHTML !== "") {
+        if (checkbox.checked) {
+          switchCF("fahr", weathertoday);
+        } else {
+          switchCF("celsius", weathertoday);
+        }
+      }
+    });
     return weathertoday;
   } catch (err) {
     console.error(err);
@@ -69,6 +70,7 @@ const updateDom = async function (weatherinfoobject) {
   const info = document.getElementById("info");
   const hfour = info.querySelectorAll(".hideshowtitle");
   const content = document.getElementById("content");
+  const loading = document.createElement("");
   const locationheader = document.getElementById("locationheader");
   const currenttemp = document.getElementById("currenttemp");
   const extratempinfo = document.getElementById("extratempinfo");
