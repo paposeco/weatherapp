@@ -20,19 +20,49 @@
         </label>
         <input type="submit" id="submitsearch" value="Search" />
       </form>
+      <label class="switch">
+        <input type="checkbox" />
+        <span class="slider round"></span>
+      </label>
 
       <div id="info">
         <div id="locationheader"></div>
-        <div id="currenttemp"></div>
+        <div id="currenttempdiv">
+          <h3 id="currenttemp"></h3>
+          <div>
+            <h4 class="hideshowtitle">Feels like</h4>
+            <p id="feelslike"></p>
+          </div>
+        </div>
+        <div id="weathergif">
+          <p id="weathergifdesc"></p>
+          <p style="font-size: 10px; visibility: hidden" id="note">
+            (Note: This is a terrible ideia, but I need to pratice promises)
+          </p>
+        </div>
         <div id="extratempinfo">
-          <div id="feelslike"><h4 class="hideshowtitle">Feels like</h4></div>
-          <div id="mintemp"><h4 class="hideshowtitle">Low</h4></div>
-          <div id="maxtemp"><h4 class="hideshowtitle">High</h4></div>
-          <div id="humidity"><h4 class="hideshowtitle">Humidity</h4></div>
+          <div>
+            <h4 class="hideshowtitle">Low</h4>
+            <p id="mintemp"></p>
+          </div>
+          <div>
+            <h4 class="hideshowtitle">High</h4>
+            <p id="maxtemp"></p>
+          </div>
+          <div>
+            <h4 class="hideshowtitle">Humidity</h4>
+            <p id="humidity"></p>
+          </div>
         </div>
         <div id="sun">
-          <div id="sunrise"><h4 class="hideshowtitle">Sunrise</h4></div>
-          <div id="sunset"><h4 class="hideshowtitle">Sunset</h4></div>
+          <div>
+            <h4 class="hideshowtitle">Sunrise</h4>
+            <p id="sunrise"></p>
+          </div>
+          <div>
+            <h4 class="hideshowtitle">Sunset</h4>
+            <p id="sunset"></p>
+          </div>
         </div>
       </div>
     </div>
