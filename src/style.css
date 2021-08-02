@@ -2,3 +2,11 @@
   visibility: hidden;
   height: 0px;
 }
+
+#extratempinfo,
+#sun,
+#currenttempdiv {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

@@ -4,6 +4,16 @@ import "./style.css";
 const locationsearch = document.getElementById("locationinput");
 const submitsearch = document.getElementById("submitsearch");
 const form = document.querySelector("form");
+const checkbox = document.querySelector("input[type='checkbox']");
+checkbox.addEventListener("click", function (e) {
+  if (checkbox.checked) {
+    console.log("fahr");
+  } else {
+    console.log("cel");
+  }
+});
+
+//tenho de pensar onde é que vou meter isto para ter acesso ao objecto com a informaçao
 
 submitsearch.addEventListener("click", function (e) {
   e.preventDefault();
@@ -43,7 +53,19 @@ async function checkweather(city) {
   }
 }
 
-const updateDom = function (weatherinfoobject) {
+async function getweathergif(description) {
+  const url = `https://api.giphy.com/v1/gifs/translate?api_key=WSIARvZTJXnRlA7vbrrNnAcfTIfQfRzp&s=${description}`;
+  try {
+    const response = await fetch(url, { mode: "cors" });
+    const fetcheddata = await response.json();
+    const imgurl = await fetcheddata.data.images.original.url;
+    return imgurl;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+const updateDom = async function (weatherinfoobject) {
   const info = document.getElementById("info");
   const hfour = info.querySelectorAll(".hideshowtitle");
   const content = document.getElementById("content");
@@ -51,39 +73,58 @@ const updateDom = function (weatherinfoobject) {
   const currenttemp = document.getElementById("currenttemp");
   const extratempinfo = document.getElementById("extratempinfo");
   const sun = document.getElementById("sun");
+  const weatherdescription = document.getElementById("weathergif");
+  let img;
+  if (document.getElementById("weathergifimg") === null) {
+    img = document.createElement("img");
+    img.setAttribute("id", "weathergifimg");
+    img.setAttribute("src", "#");
+  } else {
+    img = document.getElementById("weathergifimg");
+    img.setAttribute("src", "#");
+  }
 
   hfour.forEach(function (title) {
-    console.log(title);
     title.style.visibility = "visible";
     title.style.height = "min-content";
   });
 
-  let unitstoggleLabel = document.querySelector("switch");
-  if (unitstoggleLabel === null) {
-    unitstoggleLabel = document.createElement("label");
-    unitstoggleLabel.setAttribute("class", "switch");
-    content.insertBefore(unitstoggleLabel, info);
-    const unitstoggle = document.createElement("input");
-    unitstoggle.setAttribute("type", "checkbox");
-    const span = document.createElement("span");
-    span.setAttribute("class", "slider round");
-    unitstoggleLabel.appendChild(unitstoggle);
-    unitstoggleLabel.appendChild(span);
-  }
+  const inputcheck = document.querySelector("input[type='checkbox']");
 
+  const phumidity = document.getElementById("humidity");
   locationheader.innerHTML = `${weatherinfoobject.city}, ${weatherinfoobject.country}`;
-  currenttemp.innerHTML = weatherinfoobject.temperature[0] + "°C";
-  const divfeelslike = document.getElementById("feelslike");
-  const divmintemp = document.getElementById("mintemp");
-  const divmaxtemp = document.getElementById("maxtemp");
-  const divhumidity = document.getElementById("humidity");
-  divfeelslike.innerHTML += weatherinfoobject.feelslike[0] + "°C";
-  divmintemp.innerHTML += weatherinfoobject.mintemp[0] + "°C";
-  divmaxtemp.innerHTML += weatherinfoobject.maxtemp[0] + "°C";
-  divhumidity.innerHTML += weatherinfoobject.humidity + "%";
-
+  phumidity.innerHTML = weatherinfoobject.humidity + "%";
+  if (inputcheck.checked) {
+    switchCF("fahr", weatherinfoobject);
+  } else {
+    switchCF("celsius", weatherinfoobject);
+  }
   const sunrise = document.getElementById("sunrise");
   const sunset = document.getElementById("sunset");
-  sunrise.innerHTML += weatherinfoobject.sunrise;
-  sunset.innerHTML += weatherinfoobject.sunset;
+  sunrise.innerHTML = weatherinfoobject.sunrise;
+  sunset.innerHTML = weatherinfoobject.sunset;
+
+  document.getElementById("weathergifdesc").textContent =
+    weatherinfoobject.weatherdescription;
+  img.src = await getweathergif(weatherinfoobject.weatherdescription)
+    .then(weatherdescription.appendChild(img))
+    .then((document.getElementById("note").style.visibility = "visible"));
 };
+
+function switchCF(unit, weatherinfoobject) {
+  const currenttemp = document.getElementById("currenttemp");
+  const pfeelslike = document.getElementById("feelslike");
+  const pmintemp = document.getElementById("mintemp");
+  const pmaxtemp = document.getElementById("maxtemp");
+  if (unit === "celsius") {
+    currenttemp.innerHTML = "Temp " + weatherinfoobject.temperature[0] + "°C";
+    pfeelslike.innerHTML = weatherinfoobject.feelslike[0] + "°C";
+    pmintemp.innerHTML = weatherinfoobject.mintemp[0] + "°C";
+    pmaxtemp.innerHTML = weatherinfoobject.maxtemp[0] + "°C";
+  } else {
+    currenttemp.innerHTML = "Temp " + weatherinfoobject.temperature[1] + "°F";
+    pfeelslike.innerHTML = weatherinfoobject.feelslike[1] + "°F";
+    pmintemp.innerHTML = weatherinfoobject.mintemp[1] + "°F";
+    pmaxtemp.innerHTML = weatherinfoobject.maxtemp[1] + "°F";
+  }
+}
