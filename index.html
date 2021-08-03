@@ -2,66 +2,74 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
+    />
     <title>Weather App</title>
   </head>
   <body>
-    <h1>Weather</h1>
-    <h2>Check the weather in a city:</h2>
     <div id="content">
-      <form>
-        <label for="locationinput">
-          <input
-            type="text"
-            pattern="[a-zA-Z\s]{2,30}"
-            id="locationinput"
-            minlength="2"
-            maxlength="30"
-          />
+      <h1>Weather</h1>
+      <h2>Check the current weather in any city:</h2>
+      <div>
+        <form>
+          <label for="locationinput">
+            <input
+              type="text"
+              pattern="[a-zA-Z\s]{2,30}"
+              id="locationinput"
+              minlength="2"
+              maxlength="30"
+            />
+          </label>
+          <input type="submit" id="submitsearch" value="Search" />
+        </form>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
         </label>
-        <input type="submit" id="submitsearch" value="Search" />
-      </form>
-      <label class="switch">
-        <input type="checkbox" />
-        <span class="slider round"></span>
-      </label>
-      <div id="loading"></div>
-      <div id="info">
-        <div id="locationheader"></div>
-        <div id="currenttempdiv">
-          <h3 id="currenttemp"></h3>
-          <div>
-            <h4 class="hideshowtitle">Feels like</h4>
-            <p id="feelslike"></p>
-          </div>
+        <div id="loading">
+          <i class="las la-spinner spinit"></i>
         </div>
-        <div id="weathergif">
-          <p id="weathergifdesc"></p>
-          <p style="font-size: 10px; visibility: hidden" id="note">
-            (Note: This is a terrible ideia, but I need to pratice promises)
-          </p>
-        </div>
-        <div id="extratempinfo">
-          <div>
-            <h4 class="hideshowtitle">Low</h4>
-            <p id="mintemp"></p>
+        <div id="info">
+          <div id="locationheader"></div>
+          <div id="currenttempdiv">
+            <h3 id="currenttemp"></h3>
+            <div>
+              <h4 class="hideshowtitle">Feels like</h4>
+              <p id="feelslike"></p>
+            </div>
           </div>
-          <div>
-            <h4 class="hideshowtitle">High</h4>
-            <p id="maxtemp"></p>
+          <div id="weathergif">
+            <p id="weathergifdesc"></p>
+            <p style="font-size: 10px; visibility: hidden" id="note">
+              (Note: This is a terrible ideia, but I need to pratice promises)
+            </p>
           </div>
-          <div>
-            <h4 class="hideshowtitle">Humidity</h4>
-            <p id="humidity"></p>
+          <div id="extratempinfo">
+            <div>
+              <h4 class="hideshowtitle">Low</h4>
+              <p id="mintemp"></p>
+            </div>
+            <div>
+              <h4 class="hideshowtitle">High</h4>
+              <p id="maxtemp"></p>
+            </div>
+            <div>
+              <h4 class="hideshowtitle">Humidity</h4>
+              <p id="humidity"></p>
+            </div>
           </div>
-        </div>
-        <div id="sun">
-          <div>
-            <h4 class="hideshowtitle">Sunrise</h4>
-            <p id="sunrise"></p>
-          </div>
-          <div>
-            <h4 class="hideshowtitle">Sunset</h4>
-            <p id="sunset"></p>
+          <div id="sun">
+            <div>
+              <h4 class="hideshowtitle">Sunrise</h4>
+              <p id="sunrise"></p>
+            </div>
+            <div>
+              <h4 class="hideshowtitle">Sunset</h4>
+              <p id="sunset"></p>
+            </div>
           </div>
         </div>
       </div>
