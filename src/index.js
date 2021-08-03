@@ -36,6 +36,7 @@ async function checkweather(city) {
       fetcheddata.sys.country,
       fetcheddata.name
     );
+    console.log(weathertoday);
     updateDom(weathertoday);
     const checkbox = document.querySelector("input[type='checkbox']");
     checkbox.addEventListener("click", function (e) {
@@ -69,8 +70,7 @@ async function getweathergif(description) {
 const updateDom = async function (weatherinfoobject) {
   const info = document.getElementById("info");
   const hfour = info.querySelectorAll(".hideshowtitle");
-  const content = document.getElementById("content");
-  const loading = document.createElement("");
+  //const loading = document.createElement("");
   const locationheader = document.getElementById("locationheader");
   const currenttemp = document.getElementById("currenttemp");
   const extratempinfo = document.getElementById("extratempinfo");
@@ -108,9 +108,9 @@ const updateDom = async function (weatherinfoobject) {
 
   document.getElementById("weathergifdesc").textContent =
     weatherinfoobject.weatherdescription;
-  img.src = await getweathergif(weatherinfoobject.weatherdescription)
-    .then(weatherdescription.appendChild(img))
-    .then((document.getElementById("note").style.visibility = "visible"));
+  // img.src = await getweathergif(weatherinfoobject.weatherdescription)
+  //   .then(weatherdescription.appendChild(img))
+  //   .then((document.getElementById("note").style.visibility = "visible"));
 };
 
 function switchCF(unit, weatherinfoobject) {
@@ -130,3 +130,51 @@ function switchCF(unit, weatherinfoobject) {
     pmaxtemp.innerHTML = weatherinfoobject.maxtemp[1] + "°F";
   }
 }
+
+// const transformit = function (domelement) {
+//   switch (domelement.style.transform) {
+//     case "":
+//       domelement.style.transform = "rotate(100deg)";
+//       break;
+//     case "rotate(370deg)":
+//       domelement.style.transform = "rotate(100deg)";
+//       break;
+//     case "rotate(100deg)":
+//       domelement.style.transform = "rotate(190deg)";
+//       break;
+//     case "rotate(190deg)":
+//       domelement.style.transform = "rotate(280deg)";
+//       break;
+//     case "rotate(280deg)":
+//       domelement.style.transform = "rotate(370deg)";
+//       break;
+//   }
+// };
+
+// const animatespinner = function () {
+//   const spinit = document.querySelector(".spinit");
+//   setInterval(transformit, 500, spinit);
+// };
+
+// window.onload = animatespinner();
+
+const spinelement = document.querySelector(".spinit");
+let start, previousTimeStamp;
+
+function step(timestamp) {
+  if (start === undefined) start = timestamp;
+  const elapsed = timestamp - start;
+
+  if (previousTimeStamp !== timestamp) {
+    const count = Math.min(0.1 * elapsed, 200);
+    spinelement.style.transform = "transform(" + count + "deg)";
+  }
+
+  if (elapsed < 2000) {
+    // Stop the animation after 2 seconds
+    previousTimeStamp = timestamp;
+    window.requestAnimationFrame(step);
+  }
+}
+
+window.requestAnimationFrame(step);
