@@ -22,6 +22,7 @@ submitsearch.addEventListener("click", function (e) {
 async function checkweather(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=da23e2206ca1765152d255ed5882ba1f`;
   try {
+    const firstID = window.requestAnimationFrame(animatespinner.step);
     const response = await fetch(url, { mode: "cors" });
     const fetcheddata = await response.json();
     const weathertoday = new weatherStats(
@@ -36,7 +37,7 @@ async function checkweather(city) {
       fetcheddata.sys.country,
       fetcheddata.name
     );
-    console.log(weathertoday);
+    window.cancelAnimationFrame(firstID);
     updateDom(weathertoday);
     const checkbox = document.querySelector("input[type='checkbox']");
     checkbox.addEventListener("click", function (e) {
@@ -131,50 +132,24 @@ function switchCF(unit, weatherinfoobject) {
   }
 }
 
-// const transformit = function (domelement) {
-//   switch (domelement.style.transform) {
-//     case "":
-//       domelement.style.transform = "rotate(100deg)";
-//       break;
-//     case "rotate(370deg)":
-//       domelement.style.transform = "rotate(100deg)";
-//       break;
-//     case "rotate(100deg)":
-//       domelement.style.transform = "rotate(190deg)";
-//       break;
-//     case "rotate(190deg)":
-//       domelement.style.transform = "rotate(280deg)";
-//       break;
-//     case "rotate(280deg)":
-//       domelement.style.transform = "rotate(370deg)";
-//       break;
-//   }
-// };
+const animatespinner = (function () {
+  const spinelement = document.querySelector(".spinit");
+  let start, previousTimeStamp, animationID;
 
-// const animatespinner = function () {
-//   const spinit = document.querySelector(".spinit");
-//   setInterval(transformit, 500, spinit);
-// };
-
-// window.onload = animatespinner();
-
-const spinelement = document.querySelector(".spinit");
-let start, previousTimeStamp;
-
-function step(timestamp) {
-  if (start === undefined) start = timestamp;
-  const elapsed = timestamp - start;
-
-  if (previousTimeStamp !== timestamp) {
-    const count = Math.min(0.1 * elapsed, 200);
-    spinelement.style.transform = "transform(" + count + "deg)";
-  }
-
-  if (elapsed < 2000) {
-    // Stop the animation after 2 seconds
-    previousTimeStamp = timestamp;
+  function step(timestamp) {
+    if (start === undefined) {
+      start = timestamp;
+    }
+    let elapsed = timestamp - start;
+    if (previousTimeStamp !== timestamp) {
+      if (elapsed > 3600) {
+        const minutes = Math.floor(elapsed / 3600);
+        elapsed = elapsed - 3600 * minutes;
+      }
+      const count = Math.min(0.1 * elapsed, 360);
+      spinelement.style.transform = "rotate(" + count + "deg)";
+    }
     window.requestAnimationFrame(step);
   }
-}
-
-window.requestAnimationFrame(step);
+  return { step };
+})();

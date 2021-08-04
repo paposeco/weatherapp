@@ -24,7 +24,3 @@
 #weathergifimg {
   max-height: 200px;
 }
-
-.spinit {
-  transition: transform 0.2s;
-}
