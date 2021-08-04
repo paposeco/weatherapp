@@ -10,7 +10,17 @@
   </head>
   <body>
     <div id="content">
-      <h1>Weather</h1>
+      <header>
+        <h1>Weather App</h1>
+        <div id="switching">
+          <span>°C</span>
+          <label class="switch">
+            <input type="checkbox" />
+            <span class="slider round"></span>
+          </label>
+          <span>°F</span>
+        </div>
+      </header>
       <h2>Check the current weather in any city:</h2>
       <div>
         <form>
@@ -23,51 +33,58 @@
               maxlength="30"
             />
           </label>
-          <input type="submit" id="submitsearch" value="Search" />
+          <input type="submit" id="submitsearch" value="Search" autofocus />
         </form>
-        <label class="switch">
-          <input type="checkbox" />
-          <span class="slider round"></span>
-        </label>
+
         <div id="loading">
           <i class="las la-spinner spinit"></i>
+          <span>Searching</span>
         </div>
         <div id="info">
           <div id="locationheader"></div>
           <div id="currenttempdiv">
-            <h3 id="currenttemp"></h3>
             <div>
-              <h4 class="hideshowtitle">Feels like</h4>
+              <h3 id="currenttemp"></h3>
+              <span>,&nbsp</span>
+              <p id="weathergifdesc"></p>
+            </div>
+            <div id="feelslikediv">
+              <p class="hideshowtitle">Feels like&nbsp</p>
               <p id="feelslike"></p>
             </div>
           </div>
           <div id="weathergif">
-            <p id="weathergifdesc"></p>
-            <p style="font-size: 10px; visibility: hidden" id="note">
+            <p style="visibility: hidden" id="note">
               (Note: This is a terrible ideia, but I need to pratice promises)
             </p>
           </div>
           <div id="extratempinfo">
             <div>
-              <h4 class="hideshowtitle">Low</h4>
+              <h3 class="hideshowtitle">
+                <i class="las la-temperature-low"></i>Low
+              </h3>
+
               <p id="mintemp"></p>
             </div>
             <div>
-              <h4 class="hideshowtitle">High</h4>
+              <h3 class="hideshowtitle">
+                <i class="las la-temperature-high"></i>High
+              </h3>
+
               <p id="maxtemp"></p>
             </div>
             <div>
-              <h4 class="hideshowtitle">Humidity</h4>
+              <h3 class="hideshowtitle">Humidity</h3>
               <p id="humidity"></p>
             </div>
           </div>
           <div id="sun">
             <div>
-              <h4 class="hideshowtitle">Sunrise</h4>
+              <h3 class="hideshowtitle"><i class="las la-sun"></i>Sunrise</h3>
               <p id="sunrise"></p>
             </div>
             <div>
-              <h4 class="hideshowtitle">Sunset</h4>
+              <h3 class="hideshowtitle"><i class="las la-moon"></i>Sunset</h3>
               <p id="sunset"></p>
             </div>
           </div>
