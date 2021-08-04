@@ -22,9 +22,12 @@ submitsearch.addEventListener("click", function (e) {
 async function checkweather(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=da23e2206ca1765152d255ed5882ba1f`;
   try {
-    const firstID = window.requestAnimationFrame(animatespinner.step);
+    const divloading = document.getElementById("loading");
+    divloading.style.visibility = "visible";
+    const firstid = window.requestAnimationFrame(animatespinner.step);
     const response = await fetch(url, { mode: "cors" });
     const fetcheddata = await response.json();
+    divloading.style.visibility = "hidden";
     const weathertoday = new weatherStats(
       fetcheddata.weather[0].main,
       fetcheddata.main.temp,
@@ -37,7 +40,7 @@ async function checkweather(city) {
       fetcheddata.sys.country,
       fetcheddata.name
     );
-    window.cancelAnimationFrame(firstID);
+
     updateDom(weathertoday);
     const checkbox = document.querySelector("input[type='checkbox']");
     checkbox.addEventListener("click", function (e) {
@@ -71,7 +74,6 @@ async function getweathergif(description) {
 const updateDom = async function (weatherinfoobject) {
   const info = document.getElementById("info");
   const hfour = info.querySelectorAll(".hideshowtitle");
-  //const loading = document.createElement("");
   const locationheader = document.getElementById("locationheader");
   const currenttemp = document.getElementById("currenttemp");
   const extratempinfo = document.getElementById("extratempinfo");
@@ -109,9 +111,9 @@ const updateDom = async function (weatherinfoobject) {
 
   document.getElementById("weathergifdesc").textContent =
     weatherinfoobject.weatherdescription;
-  // img.src = await getweathergif(weatherinfoobject.weatherdescription)
-  //   .then(weatherdescription.appendChild(img))
-  //   .then((document.getElementById("note").style.visibility = "visible"));
+  img.src = await getweathergif(weatherinfoobject.weatherdescription)
+    .then(weatherdescription.appendChild(img))
+    .then((document.getElementById("note").style.visibility = "visible"));
 };
 
 function switchCF(unit, weatherinfoobject) {
@@ -120,12 +122,12 @@ function switchCF(unit, weatherinfoobject) {
   const pmintemp = document.getElementById("mintemp");
   const pmaxtemp = document.getElementById("maxtemp");
   if (unit === "celsius") {
-    currenttemp.innerHTML = "Temp " + weatherinfoobject.temperature[0] + "°C";
+    currenttemp.innerHTML = weatherinfoobject.temperature[0] + "°C";
     pfeelslike.innerHTML = weatherinfoobject.feelslike[0] + "°C";
     pmintemp.innerHTML = weatherinfoobject.mintemp[0] + "°C";
     pmaxtemp.innerHTML = weatherinfoobject.maxtemp[0] + "°C";
   } else {
-    currenttemp.innerHTML = "Temp " + weatherinfoobject.temperature[1] + "°F";
+    currenttemp.innerHTML = weatherinfoobject.temperature[1] + "°F";
     pfeelslike.innerHTML = weatherinfoobject.feelslike[1] + "°F";
     pmintemp.innerHTML = weatherinfoobject.mintemp[1] + "°F";
     pmaxtemp.innerHTML = weatherinfoobject.maxtemp[1] + "°F";
@@ -137,6 +139,8 @@ const animatespinner = (function () {
   let start, previousTimeStamp, animationID;
 
   function step(timestamp) {
+    const hiddenorvisibile = document.getElementById("loading").style
+      .visibility;
     if (start === undefined) {
       start = timestamp;
     }
@@ -149,7 +153,13 @@ const animatespinner = (function () {
       const count = Math.min(0.1 * elapsed, 360);
       spinelement.style.transform = "rotate(" + count + "deg)";
     }
-    window.requestAnimationFrame(step);
+    if (hiddenorvisibile === "visible") {
+      animationID = window.requestAnimationFrame(step);
+      return animationID;
+    }
+    window.cancelAnimationFrame(animationID);
   }
   return { step };
 })();
+
+window.onload = checkweather("Agroal");

@@ -2,6 +2,10 @@
   box-sizing: content-box;
 }
 
+p {
+  font-size: 16px;
+}
+
 .hideshowtitle {
   visibility: hidden;
   height: 0px;
@@ -12,15 +16,186 @@
 #currenttempdiv {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  justify-content: start;
+  gap: 30px;
+}
+
+#extratempinfo div,
+#sun div {
+  min-width: 80px;
+}
+
+#currenttempdiv div {
+  min-width: 120px;
+}
+
+#extratempinfo,
+#sun {
+  text-align: center;
+  font-size: 18px;
+  justify-content: start;
+  margin-left: 20px;
+}
+
+#extratempinfo p,
+#sun p,
+#currenttempdiv p {
+  font-size: 18px;
+}
+
+#currenttempdiv {
+  align-items: center;
+}
+
+#currenttemp {
+  text-align: center;
+  font-size: 24px;
+}
+
+#locationheader {
+  font-size: 24px;
 }
 
 #content {
-  width: 800px;
+  width: 450px;
   height: 800px;
   margin: 100px auto;
 }
 
 #weathergifimg {
-  max-height: 200px;
+  height: 200px;
+  display: block;
+  margin: auto;
+}
+
+#loading {
+  visibility: hidden;
+}
+
+#feelslikediv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
+#note {
+  font-size: 8px;
+  color: lightgrey;
+}
+
+#currenttempdiv > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+input[type="text"] {
+  border: 1px solid black;
+  border-radius: 0px;
+  height: 30px;
+  width: 250px;
+  font-size: 18px;
+  padding: 10px;
+}
+
+input[type="submit"] {
+  margin-left: 15px;
+  height: 40px;
+  width: 85px;
+  background-color: lightblue;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+/* checkbox slider */
+/* copied from w3schools */
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 58px;
+  height: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 23px;
+  width: 23px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 30px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+#switching {
+  margin-top: 10px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  width: 100px;
+  align-items: center;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
