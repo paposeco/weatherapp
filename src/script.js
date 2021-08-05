@@ -18,7 +18,8 @@ export default class weatherStats {
     sunrise,
     sunset,
     country,
-    city
+    city,
+    timeoffset
   ) {
     this.weatherdescription = weatherdescription;
     this.temperature = converttemperature(temperature);
@@ -26,9 +27,44 @@ export default class weatherStats {
     this.mintemp = converttemperature(mintemp);
     this.maxtemp = converttemperature(maxtemp);
     this.humidity = humidity;
-    this.sunrise = format(fromUnixTime(sunrise), "HH:mm");
-    this.sunset = format(fromUnixTime(sunset), "HH:mm");
+    this.sunrise = sunLocalTime(fromUnixTime(sunrise), timeoffset);
+    this.sunset = sunLocalTime(fromUnixTime(sunset), timeoffset);
     this.country = country;
     this.city = city;
+    this.timeoffset = currentTime(timeoffset);
   }
 }
+
+const currentTime = function (timeoffset) {
+  const today = new Date();
+  const hoursUTC = today.getUTCHours();
+  let minutes = today.getMinutes();
+  if (Number(minutes) < 10) {
+    minutes = "0" + minutes;
+  }
+  let timeoffsetHours = Number(timeoffset) / 60 / 60;
+  let hours = Number(hoursUTC) + timeoffsetHours;
+  if (hours < 10) {
+    hours = "0" + hours;
+  }
+  return `${hours}:${minutes}`;
+};
+
+const sunLocalTime = function (date, timeoffset) {
+  const hoursUTC = date.getUTCHours();
+  let minutes = date.getMinutes();
+  if (Number(minutes) < 10) {
+    minutes = "0" + minutes;
+  }
+  let timeoffsetHours = Number(timeoffset) / 60 / 60;
+  let hours = Number(hoursUTC) + timeoffsetHours;
+  console.log(hours);
+  if (hours > 0 && hours < 10) {
+    hours = "0" + hours;
+  } else if (hours < 0) {
+    hours = 24 + hours;
+  } else if (hours > 24) {
+    hours = hours - 24;
+  }
+  return `${hours}:${minutes}`;
+};

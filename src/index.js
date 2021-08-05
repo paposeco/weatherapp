@@ -38,10 +38,11 @@ async function checkweather(city) {
       fetcheddata.sys.sunrise,
       fetcheddata.sys.sunset,
       fetcheddata.sys.country,
-      fetcheddata.name
+      fetcheddata.name,
+      fetcheddata.timezone
     );
-
     updateDom(weathertoday);
+    styledayornight(weathertoday);
     const checkbox = document.querySelector("input[type='checkbox']");
     checkbox.addEventListener("click", function (e) {
       const currenttemp = document.getElementById("currenttemp");
@@ -97,7 +98,7 @@ const updateDom = async function (weatherinfoobject) {
   const inputcheck = document.querySelector("input[type='checkbox']");
 
   const phumidity = document.getElementById("humidity");
-  locationheader.innerHTML = `${weatherinfoobject.city}, ${weatherinfoobject.country}`;
+  locationheader.innerHTML = `${weatherinfoobject.city}, ${weatherinfoobject.country} | Local time: ${weatherinfoobject.timeoffset}`;
   phumidity.innerHTML = weatherinfoobject.humidity + "%";
   if (inputcheck.checked) {
     switchCF("fahr", weatherinfoobject);
@@ -110,7 +111,7 @@ const updateDom = async function (weatherinfoobject) {
   sunset.innerHTML = weatherinfoobject.sunset;
 
   document.getElementById("weathergifdesc").textContent =
-    weatherinfoobject.weatherdescription;
+    weatherinfoobject.weatherdescription + " | ";
   img.src = await getweathergif(weatherinfoobject.weatherdescription)
     .then(weatherdescription.appendChild(img))
     .then((document.getElementById("note").style.visibility = "visible"));
@@ -162,4 +163,12 @@ const animatespinner = (function () {
   return { step };
 })();
 
+const styledayornight = function (weatherinfoobject) {
+  const hour = weatherinfoobject.timeoffset.split(":")[0];
+  const sunrise = weatherinfoobject.sunrise;
+  const sunset = weatherinfoobject.sunset;
+};
+
 window.onload = checkweather("Agroal");
+
+// handle not found
