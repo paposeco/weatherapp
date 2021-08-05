@@ -46,6 +46,9 @@ const currentTime = function (timeoffset) {
   let hours = Number(hoursUTC) + timeoffsetHours;
   if (hours < 10) {
     hours = "0" + hours;
+  } else if (hours > 24) {
+    hours = hours - 24;
+    hours = "0" + hours;
   }
   return `${hours}:${minutes}`;
 };
@@ -58,13 +61,13 @@ const sunLocalTime = function (date, timeoffset) {
   }
   let timeoffsetHours = Number(timeoffset) / 60 / 60;
   let hours = Number(hoursUTC) + timeoffsetHours;
-  console.log(hours);
   if (hours > 0 && hours < 10) {
     hours = "0" + hours;
   } else if (hours < 0) {
     hours = 24 + hours;
   } else if (hours > 24) {
     hours = hours - 24;
+    hours = "0" + hours;
   }
   return `${hours}:${minutes}`;
 };

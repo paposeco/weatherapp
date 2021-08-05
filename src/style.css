@@ -2,6 +2,13 @@
   box-sizing: content-box;
 }
 
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc((98vh - 650px) / 2);
+}
+
 p {
   font-size: 16px;
 }
@@ -17,12 +24,13 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: start;
-  gap: 30px;
+  gap: 10px;
 }
 
 #extratempinfo div,
 #sun div {
-  min-width: 80px;
+  min-width: 120px;
+  margin-top: 10px;
 }
 
 #currenttempdiv div {
@@ -53,17 +61,26 @@ p {
 }
 
 #locationheader {
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: bolder;
 }
 
 #content {
-  width: 450px;
-  height: 800px;
-  margin: 100px auto;
+  width: 800px;
+  height: 650px;
+  margin: auto auto;
+  padding: 10px 30px;
+  border: 4px solid white;
+}
+
+#weathergif {
+  min-width: 400px;
+  align-self: center;
 }
 
 #weathergifimg {
   height: 200px;
+  max-width: 360px;
   display: block;
   margin: auto;
 }
@@ -83,11 +100,11 @@ p {
 
 #note {
   font-size: 8px;
-  color: lightgrey;
+  text-align: center;
 }
 
 input[type="text"] {
-  border: 1px solid black;
+  border: none;
   border-radius: 0px;
   height: 30px;
   width: 250px;
@@ -96,21 +113,70 @@ input[type="text"] {
 }
 
 input[type="submit"] {
-  margin-left: 15px;
-  height: 40px;
+  height: 50px;
   width: 85px;
-  background-color: lightblue;
   font-size: 16px;
   border: none;
   outline: none;
   cursor: pointer;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 form {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.day {
+  background-color: #ffee8e;
+}
+
+.night {
+  background-color: #2a2f4c;
+  color: white;
+}
+
+.dayDiv {
+  background-color: #fff6c1;
+}
+
+.nightDiv {
+  background-color: #54586f;
+}
+
+#centerdiv {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+#searchbar {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  align-items: center;
+  gap: 10px;
+}
+
+.la-search {
+  padding-left: 10px;
+  font-size: 20px;
+}
+
+#sunormoon {
+  position: absolute;
+  z-index: -1;
 }
 
 /* checkbox slider */
@@ -140,7 +206,7 @@ form {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: lightgrey;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -158,11 +224,11 @@ form {
 }
 
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: #f5cf00;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px #f5cf00;
 }
 
 input:checked + .slider:before {
@@ -186,12 +252,5 @@ input:checked + .slider:before {
   display: flex;
   flex-direction: row;
   width: 100px;
-  align-items: center;
-}
-
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
 }

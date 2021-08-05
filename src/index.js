@@ -80,15 +80,7 @@ const updateDom = async function (weatherinfoobject) {
   const extratempinfo = document.getElementById("extratempinfo");
   const sun = document.getElementById("sun");
   const weatherdescription = document.getElementById("weathergif");
-  let img;
-  if (document.getElementById("weathergifimg") === null) {
-    img = document.createElement("img");
-    img.setAttribute("id", "weathergifimg");
-    img.setAttribute("src", "#");
-  } else {
-    img = document.getElementById("weathergifimg");
-    img.setAttribute("src", "#");
-  }
+  const img = document.getElementById("weathergifimg");
 
   hfour.forEach(function (title) {
     title.style.visibility = "visible";
@@ -98,7 +90,7 @@ const updateDom = async function (weatherinfoobject) {
   const inputcheck = document.querySelector("input[type='checkbox']");
 
   const phumidity = document.getElementById("humidity");
-  locationheader.innerHTML = `${weatherinfoobject.city}, ${weatherinfoobject.country} | Local time: ${weatherinfoobject.timeoffset}`;
+  locationheader.innerHTML = `${weatherinfoobject.city}, ${weatherinfoobject.country} &nbsp|&nbsp <i class="las la-clock"></i> ${weatherinfoobject.timeoffset}`;
   phumidity.innerHTML = weatherinfoobject.humidity + "%";
   if (inputcheck.checked) {
     switchCF("fahr", weatherinfoobject);
@@ -112,9 +104,9 @@ const updateDom = async function (weatherinfoobject) {
 
   document.getElementById("weathergifdesc").textContent =
     weatherinfoobject.weatherdescription + " | ";
-  img.src = await getweathergif(weatherinfoobject.weatherdescription)
-    .then(weatherdescription.appendChild(img))
-    .then((document.getElementById("note").style.visibility = "visible"));
+  img.src = await getweathergif(weatherinfoobject.weatherdescription);
+  weatherdescription.style.visibility = "visible";
+  info.style.visibility = "visible";
 };
 
 function switchCF(unit, weatherinfoobject) {
@@ -165,9 +157,52 @@ const animatespinner = (function () {
 
 const styledayornight = function (weatherinfoobject) {
   const hour = weatherinfoobject.timeoffset.split(":")[0];
-  const sunrise = weatherinfoobject.sunrise;
-  const sunset = weatherinfoobject.sunset;
+  const sunrise = weatherinfoobject.sunrise.split(":")[0];
+  const sunset = weatherinfoobject.sunset.split(":")[0];
+  const body = document.querySelector("body");
+  const extratempinfo = document.getElementById("extratempinfo");
+  const extratempinfodiv = extratempinfo.querySelectorAll("div");
+  const sun = document.getElementById("sun");
+  const sundiv = sun.querySelectorAll("div");
+  const inputsubmit = document.querySelector("input[type='submit']");
+  const searchicon = document.querySelector(".la-search");
+  if (hour > sunrise && hour < sunset) {
+    body.setAttribute("class", "day");
+    extratempinfodiv.forEach((div) => div.setAttribute("class", "dayDiv"));
+    sundiv.forEach((div) => div.setAttribute("class", "dayDiv"));
+    inputsubmit.style.backgroundColor = "#fff6c1";
+    inputsubmit.style.color = "black";
+    searchicon.style.color = "darkgrey";
+  } else {
+    body.setAttribute("class", "night");
+    extratempinfodiv.forEach((div) => div.setAttribute("class", "nightDiv"));
+    sundiv.forEach((div) => div.setAttribute("class", "nightDiv"));
+    inputsubmit.style.backgroundColor = "#54586f";
+    inputsubmit.style.color = "white";
+    searchicon.style.color = "darkgrey";
+  }
 };
+
+const drawSunAndMoon = (function () {
+  const maxwidth =
+    Math.max(
+      document.documentElement.clientWidth || 0,
+      window.innerWidth || 0
+    ) - 10;
+  const maxheight =
+    Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0
+    ) - 10;
+  console.log(maxwidth / 2, maxheight / 2);
+  const canvas = document.getElementById("sunormoon");
+  canvas.setAttribute("width", maxwidth);
+  canvas.setAttribute("height", maxheight);
+  const ctx = canvas.getContext("2d");
+  ctx.beginPath();
+  ctx.arc(maxwidth / 2, maxheight / 2, 1000 / 2, 0, 2 * Math.PI);
+  ctx.stroke();
+})();
 
 window.onload = checkweather("Agroal");
 

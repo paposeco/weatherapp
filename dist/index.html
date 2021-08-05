@@ -9,6 +9,7 @@
     <title>Weather App</title>
   </head>
   <body>
+    <canvas id="sunormoon"></canvas>
     <div id="content">
       <header>
         <h1>Weather App</h1>
@@ -21,71 +22,77 @@
           <span>°F</span>
         </div>
       </header>
-      <h2>Check the current weather in any city:</h2>
       <div>
-        <form>
-          <label for="locationinput">
-            <input
-              type="text"
-              pattern="[a-zA-Z\s]{2,30}"
-              id="locationinput"
-              minlength="2"
-              maxlength="30"
-            />
-          </label>
-          <input type="submit" id="submitsearch" value="Search" autofocus />
-        </form>
-
+        <div id="searchbar">
+          <i class="las la-search"></i>
+          <form>
+            <label for="locationinput">
+              <input
+                type="text"
+                pattern="[a-zA-Z\s]{2,30}"
+                id="locationinput"
+                minlength="2"
+                maxlength="30"
+                placeholder="Search location"
+              />
+            </label>
+            <input type="submit" id="submitsearch" value="Search" autofocus />
+          </form>
+        </div>
         <div id="loading">
           <i class="las la-spinner spinit"></i>
           <span>Searching</span>
         </div>
-        <div id="info">
-          <div id="locationheader"></div>
-          <div id="currenttempdiv">
-            <div>
-              <h3 id="currenttemp"></h3>
+        <div id="centerdiv">
+          <div id="info" style="visibility: hidden">
+            <div id="locationheader"></div>
+            <div id="currenttempdiv">
+              <div>
+                <h3 id="currenttemp"></h3>
+              </div>
+              <div id="feelslikediv">
+                <p id="weathergifdesc"></p>
+                <p class="hideshowtitle">Feels like</p>
+                <p id="feelslike"></p>
+              </div>
             </div>
-            <div id="feelslikediv">
-              <p id="weathergifdesc"></p>
-              <p class="hideshowtitle">Feels like</p>
-              <p id="feelslike"></p>
+
+            <div id="extratempinfo">
+              <div>
+                <h3 class="hideshowtitle">
+                  <i class="las la-temperature-low"></i>Low
+                </h3>
+
+                <p id="mintemp"></p>
+              </div>
+              <div>
+                <h3 class="hideshowtitle">
+                  <i class="las la-temperature-high"></i>High
+                </h3>
+
+                <p id="maxtemp"></p>
+              </div>
+              <div>
+                <h3 class="hideshowtitle">Humidity</h3>
+                <p id="humidity"></p>
+              </div>
+            </div>
+            <div id="sun">
+              <div>
+                <h3 class="hideshowtitle"><i class="las la-sun"></i>Sunrise</h3>
+                <p id="sunrise"></p>
+              </div>
+              <div>
+                <h3 class="hideshowtitle"><i class="las la-moon"></i>Sunset</h3>
+                <p id="sunset"></p>
+              </div>
             </div>
           </div>
-          <div id="weathergif">
-            <p style="visibility: hidden" id="note">
+          <div id="weathergif" style="visibility: hidden">
+            <img src="#" id="weathergifimg" />
+            <p id="note">
               (Note: This is a terrible ideia, but I need to pratice promises)
             </p>
-          </div>
-          <div id="extratempinfo">
-            <div>
-              <h3 class="hideshowtitle">
-                <i class="las la-temperature-low"></i>Low
-              </h3>
-
-              <p id="mintemp"></p>
-            </div>
-            <div>
-              <h3 class="hideshowtitle">
-                <i class="las la-temperature-high"></i>High
-              </h3>
-
-              <p id="maxtemp"></p>
-            </div>
-            <div>
-              <h3 class="hideshowtitle">Humidity</h3>
-              <p id="humidity"></p>
-            </div>
-          </div>
-          <div id="sun">
-            <div>
-              <h3 class="hideshowtitle"><i class="las la-sun"></i>Sunrise</h3>
-              <p id="sunrise"></p>
-            </div>
-            <div>
-              <h3 class="hideshowtitle"><i class="las la-moon"></i>Sunset</h3>
-              <p id="sunset"></p>
-            </div>
           </div>
         </div>
       </div>
