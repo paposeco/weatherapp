@@ -23,9 +23,17 @@ async function checkweather(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=da23e2206ca1765152d255ed5882ba1f`;
   try {
     const divloading = document.getElementById("loading");
+    const loadingspan = divloading.querySelector("span");
+    loadingspan.textContent = "Searching";
     divloading.style.visibility = "visible";
     const firstid = window.requestAnimationFrame(animatespinner.step);
     const response = await fetch(url, { mode: "cors" });
+    if (response.status === 404) {
+      divloading.style.visibility = "hidden";
+      loadingspan.textContent = " Location not found";
+      divloading.style.visibility = "visible";
+      return;
+    }
     const fetcheddata = await response.json();
     divloading.style.visibility = "hidden";
     const weathertoday = new weatherStats(
@@ -166,6 +174,7 @@ const styledayornight = function (weatherinfoobject) {
   const sundiv = sun.querySelectorAll("div");
   const inputsubmit = document.querySelector("input[type='submit']");
   const searchicon = document.querySelector(".la-search");
+  const weatherdescription = weatherinfoobject.weatherdescription;
   if (hour > sunrise && hour < sunset) {
     body.setAttribute("class", "day");
     extratempinfodiv.forEach((div) => div.setAttribute("class", "dayDiv"));
@@ -173,6 +182,7 @@ const styledayornight = function (weatherinfoobject) {
     inputsubmit.style.backgroundColor = "#fff6c1";
     inputsubmit.style.color = "black";
     searchicon.style.color = "darkgrey";
+    weathericonDay(weatherdescription);
   } else {
     body.setAttribute("class", "night");
     extratempinfodiv.forEach((div) => div.setAttribute("class", "nightDiv"));
@@ -180,30 +190,62 @@ const styledayornight = function (weatherinfoobject) {
     inputsubmit.style.backgroundColor = "#54586f";
     inputsubmit.style.color = "white";
     searchicon.style.color = "darkgrey";
+    weathericonNight(weatherdescription);
   }
 };
 
-const drawSunAndMoon = (function () {
-  const maxwidth =
-    Math.max(
-      document.documentElement.clientWidth || 0,
-      window.innerWidth || 0
-    ) - 10;
-  const maxheight =
-    Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
-    ) - 10;
-  console.log(maxwidth / 2, maxheight / 2);
-  const canvas = document.getElementById("sunormoon");
-  canvas.setAttribute("width", maxwidth);
-  canvas.setAttribute("height", maxheight);
-  const ctx = canvas.getContext("2d");
-  ctx.beginPath();
-  ctx.arc(maxwidth / 2, maxheight / 2, 1000 / 2, 0, 2 * Math.PI);
-  ctx.stroke();
-})();
+const weathericonDay = function (weatherdescription) {
+  const weathericondiv = document.getElementById("weathericon");
+  switch (weatherdescription) {
+    case "Clouds":
+      weathericondiv.innerHTML = '<i class="las la-cloud-sun"></i>';
+      break;
+    case "Clear":
+      weathericondiv.innerHTML = '<i class="las la-sun"></i>';
+      break;
+    case "Rain":
+      weathericondiv.innerHTML = '<i class="las la-cloud-showers-heavy"></i>';
+      break;
+    case "Snow":
+      weathericondiv.innerHTML = '<i class="las la-snowflake"></i>';
+      break;
+    case "Drizzle":
+      weathericondiv.innerHTML = '<i class="las la-cloud-rain"></i>';
+      break;
+    case "Thunderstorm":
+      weathericondiv.innerHTML = '<i class="las la-bolt"></i>';
+      break;
+    default:
+      weathericondiv.innerHTML = '<i class="las la-smog"></i>';
+      break;
+  }
+};
+
+const weathericonNight = function (weatherdescription) {
+  const weathericondiv = document.getElementById("weathericon");
+  switch (weatherdescription) {
+    case "Clouds":
+      weathericondiv.innerHTML = '<i class="las la-cloud-moon"></i>';
+      break;
+    case "Clear":
+      weathericondiv.innerHTML = '<i class="lar la-moon"></i>';
+      break;
+    case "Rain":
+      weathericondiv.innerHTML = '<i class="las la-cloud-rain"></i>';
+      break;
+    case "Snow":
+      weathericondiv.innerHTML = '<i class="las la-snowflake"></i>';
+      break;
+    case "Drizzle":
+      weathericondiv.innerHTML = '<i class="las la-cloud-moon-rain">';
+      break;
+    case "Thunderstorm":
+      weathericondiv.innerHTML = '<i class="las la-bolt"></i>';
+      break;
+    default:
+      weathericondiv.innerHTML = '<i class="las la-smog"></i>';
+      break;
+  }
+};
 
 window.onload = checkweather("Agroal");
-
-// handle not found

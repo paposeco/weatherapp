@@ -1,16 +1,28 @@
+:root {
+  --main-bg-color: #edba11;
+}
+
 * {
   box-sizing: content-box;
+  font-family: Molengo;
 }
 
 body {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: calc((98vh - 650px) / 2);
+  /* margin-top: calc((98vh - 900px) / 2); */
+  height: 95vh;
 }
 
 p {
   font-size: 16px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 700;
 }
 
 .hideshowtitle {
@@ -67,10 +79,11 @@ p {
 
 #content {
   width: 800px;
-  height: 650px;
-  margin: auto auto;
-  padding: 10px 30px;
-  border: 4px solid white;
+  height: 600px;
+  /* margin: auto auto; */
+  padding: 20px 40px;
+  border: solid 4px white;
+  /* flex-grow: 1; */
 }
 
 #weathergif {
@@ -89,6 +102,9 @@ p {
   visibility: hidden;
   text-align: center;
   margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 #feelslikediv {
@@ -123,6 +139,14 @@ input[type="submit"] {
   padding-right: 0px;
 }
 
+input[type="submit"]:hover {
+  background-color: var(--main-bg-color) !important;
+}
+
+input:focus-visible {
+  outline: none;
+}
+
 form {
   display: flex;
   flex-direction: row;
@@ -132,13 +156,21 @@ form {
 
 header {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+header > div {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
 .day {
-  background-color: #ffee8e;
+  /* background-color: #ffea75; */
+  background-color: #f3cf58;
 }
 
 .night {
@@ -174,12 +206,31 @@ header {
   font-size: 20px;
 }
 
-#sunormoon {
-  position: absolute;
-  z-index: -1;
+#weathericon {
+  width: 860px;
+  text-align: right;
+  font-size: 75px;
+  color: white;
 }
 
-/* checkbox slider */
+footer {
+  margin-top: 30px;
+  font-weight: bolder;
+}
+
+footer a {
+  color: white;
+}
+
+footer a:hover {
+  color: var(--main-bg-color);
+}
+
+footer a:visited {
+  color: #665c24;
+}
+
+/* checkbox slider
 /* copied from w3schools */
 /* The switch - the box around the slider */
 .switch {
@@ -206,7 +257,7 @@ header {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: lightgrey;
+  background-color: #e7e7e7;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -224,11 +275,11 @@ header {
 }
 
 input:checked + .slider {
-  background-color: #f5cf00;
+  background-color: var(--main-bg-color);
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #f5cf00;
+  box-shadow: 0 0 1px var(--main-bg-color);
 }
 
 input:checked + .slider:before {
