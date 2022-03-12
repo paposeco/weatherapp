@@ -1,5 +1,7 @@
 # Weather App for the Odin Project
 
+[Live Demo](https://paposeco.github.io/weatherapp/)
+
 The purpose of this exercise was to learn more about promises. On my implementation I used the Open Weather Map API and the Giphy API.
 
 ## Features
