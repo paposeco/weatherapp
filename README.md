@@ -2,6 +2,8 @@
 
 [Live Demo](https://paposeco.github.io/weatherapp/)
 
+![Weather App](https://github.com/paposeco/weatherapp/assets/13892562/5773000e-0c77-4cd5-b0c1-eea87da6bc07)
+
 The purpose of this exercise was to learn more about promises. On my implementation I used the Open Weather Map API and the Giphy API.
 
 ## Features
